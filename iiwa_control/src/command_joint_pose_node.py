@@ -1,7 +1,10 @@
 #! /usr/bin/env python
+#! /home/roboticlab14/.local/lib/python2.7/site-packages python2
 
-# ET1 controller with camera_is1500
-# Jonathan Burkhard, Kyburz 2018
+#! /home/roboticlab14/.local/lib/python3.4/site-packages python3
+
+# IIWA module
+# Jonathan Burkhard,
 # Documentations : Not exist yet
 
 # TODO
@@ -14,6 +17,9 @@ import rospy
 import time
 import tf
 import numpy as np
+# from six.moves import urllib
+# print(sys.version)
+import tensorflow as ab
 import math
 import tf.transformations
 from geometry_msgs.msg import Quaternion, Point, Pose, Twist, Vector3
@@ -75,6 +81,7 @@ def run():
 #   Main
 #*******************************************************************************
 if __name__ == '__main__':
+    #print("Try")
     try:
         run()
     except rospy.ROSInterruptException:
