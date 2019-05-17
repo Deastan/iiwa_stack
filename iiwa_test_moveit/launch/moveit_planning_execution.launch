@@ -36,6 +36,7 @@
     <arg name="config" value="true"/>
   </include> -->
 
+  <!-- Somthing really important is the namespace!!! Check that for robotics hand... -->
   <!-- Load move_group -->
     <group ns="$(arg robot_name)">
         <include file="$(find iiwa_test_moveit)/launch/move_group.launch">

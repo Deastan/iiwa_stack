@@ -3,6 +3,16 @@ This repo create a robot iiwa 7 with a tool as Righthand Robotics Takktile 2.
 To run the simulation, launch the command:
 roslaunch iiwa_gazebo iiwa_gazebo_tool.launch
 
+## To run MoveIt:
+The files are in iiwa_test_moveit. If you want to run RViz, open moveit_planning_execution.launch and set argument of rviz on true.
+In terminal 1:
+$ roscore
+In terminal 2:
+$ roslaunch iiwa_gazebo iiwa_gazebo_tool.launch
+In terminal 3:
+$ roslaunch iiwa_test_moveit moveit_planning_execution.launch 
+
+
 ## From IFL
 ## IIWA STACK
 ROS Indigo/Kinetic metapackage for the KUKA LBR IIWA R800/R820 (7/14 Kg).
