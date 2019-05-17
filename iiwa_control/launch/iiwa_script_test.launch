@@ -13,6 +13,10 @@
     <group ns="$(arg robot_name)">
         <node name="node_move_group_python" pkg="iiwa_control" type="test.py" respawn="false" output="screen"/>
     </group>
+
+    <!-- <group ns="$(arg robot_name)">
+        <node name="node_move_group_python" pkg="iiwa_control" type="test_node_state.py" respawn="false" output="screen"/>
+    </group> -->
     
     
 </launch>

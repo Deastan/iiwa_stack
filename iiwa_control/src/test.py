@@ -33,6 +33,10 @@ from std_msgs.msg import String
 import geometry_msgs.msg
 
 
+from moveit_msgs.msg import RobotState
+from sensor_msgs.msg import JointState
+
+
 
 
 
@@ -84,15 +88,30 @@ if __name__ == '__main__':
         pose_goal.position.x = 0.5
         
         state = robot.get_current_state()
-        # print(state)
+        print(state)
         group.set_start_state(state)
 
         # group.get_current_pose()
 
         while True:
-            # state = robot.get_current_state()
-            # print(state)
-            # group.set_start_state(state)
+            state = robot.get_current_state()
+            print("Position: ( ", state.joint_state.position[0], ", ", state.joint_state.position[1], ", ", state.joint_state.position[2], " )")
+            # state.joint_state.position[0] = 0.5
+            # state.joint_state.position[1] = 0.5
+            # state.joint_state.position[2] = 0.5
+            # state.joint_state.position = [0.0, 0.0, 0.0, -1.5770, 0.0, -1.9886443826777622e-05, 1.4264836100785772e-05, 0.0001574951690832549, -5.156308670706267e-06, 0.12109634420144744, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.00015744801537298514, -4.287808235581281e-06, 0.12108910820644159, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -8.576287356731882e-06, 0.12174941365793668, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            # print("Position: ( ", state.joint_state.position[0], ", ", state.joint_state.position[1], ", ", state.joint_state.position[2], " )")
+            # joint_state = JointState()
+            # joint_state.header = Header()
+            # joint_state.header.stamp = rospy.Time.now()
+            # joint_state.name = ['joint_a', 'joint_b']
+            # joint_state.position = [0.17, 0.34]
+            # moveit_robot_state = RobotState()
+            # moveit_robot_state.joint_state = joint_state
+            # group.set_start_state(moveit_robot_state)
+
+            group.set_start_state(state)
+
             print(group.set_start_state_to_current_state())
             pose_goal.orientation.w = 1.0
             pose_goal.position.x = 0.7*math.cos(increment)
@@ -113,6 +132,8 @@ if __name__ == '__main__':
             # rospy.sleep(3.)
             # group.set_start_state_to_current_state()
             increment += 0.78539816339
+
+            # rospy.spin()
 
     elif state_trajectory == 2:
         scale = 1.0
@@ -147,8 +168,12 @@ if __name__ == '__main__':
 
         group.execute(plan, wait=True)
 
-    else:
-            print("Noting to do!!!!")
+    else:   
+        while True:
+
+            state = robot.get_current_state()
+            print(state)
+        print("Noting to do!!!!")
 
 
     
