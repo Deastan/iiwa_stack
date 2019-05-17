@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <!-- <include file="$(find legged_robots_sims)/launch/spawn_monoped.launch"/>
+    <include file="$(find legged_robots_sims)/launch/monoped_control.launch"/> -->
+
+    <!-- Params -->
+    <!-- These are the arguments you can pass this launch file, for example paused:=true -->
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    <arg name="robot_name" default="iiwa" />
+    <arg name="model" default="iiwa7"/>
+
+    <arg name="trajectory" default="false"/>
+
+    <!-- iiwa -->
+    <!-- Load the URDF with the given hardware interface into the ROS Parameter Server -->
+    <!-- <include file="$(find iiwa_description)/launch/$(arg model)_upload.launch">
+        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include> -->
+    
+    <!-- Robot iiwa description -->
+
+    <arg name="origin_xyz" default="'0 0 0'"/> <!-- Note the syntax to pass a vector -->
+    <arg name="origin_rpy" default="'0 0 0'"/>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find iiwa_description)/urdf/iiwa7.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name) origin_xyz:=$(arg origin_xyz) origin_rpy:=$(arg origin_rpy)" />
+    <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model iiwa -param robot_description"/>
+
+    <!-- Controller -->
+
+    <include file="$(find iiwa_gazebo)/launch/controller_iiwa.launch">
+    </include>
+    <!-- <group ns="$(arg robot_name)" unless="$(arg trajectory)">
+
+        <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value="joint_state_controller
+                 $(arg hardware_interface)_J1_controller
+                 $(arg hardware_interface)_J2_controller
+                 $(arg hardware_interface)_J3_controller
+                 $(arg hardware_interface)_J4_controller
+                 $(arg hardware_interface)_J5_controller
+                 $(arg hardware_interface)_J6_controller
+                 $(arg hardware_interface)_J7_controller"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+        </include>
+
+    </group> -->
+
+    <!-- Reflex -->
+    <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
+    </include>
+    
+</launch>

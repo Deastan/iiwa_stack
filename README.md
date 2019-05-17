@@ -1,3 +1,9 @@
+## From Deastan
+This repo create a robot iiwa 7 with a tool as Righthand Robotics Takktile 2.
+To run the simulation, launch the command:
+roslaunch iiwa_gazebo iiwa_gazebo_tool.launch
+
+## From IFL
 ## IIWA STACK
 ROS Indigo/Kinetic metapackage for the KUKA LBR IIWA R800/R820 (7/14 Kg).
 
