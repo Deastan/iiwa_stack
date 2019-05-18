@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: reflex_description
+    relative_path: urdf/reflex_takktile_2.xacro
+  SRDF:
+    relative_path: config/reflex_takktile_2.srdf
+  CONFIG:
+    author_name: jo
+    author_email: jo@ga.ch
+    generated_timestamp: 1558168666
