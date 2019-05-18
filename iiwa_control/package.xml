@@ -29,7 +29,8 @@
   <!-- <build_depend>control_msgs</build_depend> -->
 <!-- <run_depend>python-tensorflow-pip</run_depend> -->
 
-
+<build_depend>cmake_modules</build_depend>
+<run_depend>cmake_modules</run_depend> <!-- # this line was not described on the website -->
 
   <!-- <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
@@ -58,6 +59,26 @@
   <run_depend>message_runtime</run_depend>
   <run_depend>iiwa_msgs</run_depend>
 
+  <!-- MOVEIT -->
+  <run_depend>moveit_ros_move_group</run_depend>
+  <run_depend>moveit_setup_assistant</run_depend>
+  <run_depend>moveit_planners_ompl</run_depend>
+  <run_depend>moveit_fake_controller_manager</run_depend>
+  <run_depend>moveit_simple_controller_manager</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>joint_trajectory_controller</run_depend>
+  <run_depend>position_controllers</run_depend>
+  <run_depend>velocity_controllers</run_depend>
+  <run_depend>effort_controllers</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>moveit_ros_planning_interface</run_depend>
+  <run_depend>moveit_ros_warehouse</run_depend>
+  <run_depend>moveit_ros_visualization</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>iiwa_description</run_depend>
+  
   <!-- <run_depend>tensorflow</run_depend> -->
   <run_depend>python-tensorflow-pip</run_depend>
   <!-- <run_depend>python-tensorflow-pip</run_depend> -->

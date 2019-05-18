@@ -19,7 +19,21 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   #Eigen3
   #Eigen REQUIRED
+  #Eigen3 REQUIRED
+  moveit_ros_planning_interface
 )
+
+find_package(Eigen3)
+if(NOT EIGEN3_FOUND)
+  # Fallback to cmake_modules
+  find_package(cmake_modules REQUIRED)
+  find_package(Eigen REQUIRED)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
+  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})  # Not strictly necessary as Eigen is head only
+  # Possibly map additional variables to the EIGEN3_ prefix.
+else()
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -27,6 +41,8 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
+# TRY
+#find_package(Eigen3 REQUIRED) include_directories(${EIGEN3_INCLUDE_DIR})
 
 catkin_package(
   #INCLUDE_DIRS include ${Eigen_INCLUDE_DIRS}
@@ -45,4 +61,32 @@ catkin_package(
     nav_msgs
     message_runtime
 #  DEPENDS #Eigen
+    #DEPENDS Eigen3
 )
+
+###########
+## Build ##
+###########
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
+include_directories(${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+
+## Declare a cpp library
+#add_library(contact src/move.cpp)
+
+## Declare a cpp executable
+add_executable(move_cpp src/move.cpp)
+target_link_libraries(move_cpp ${catkin_LIBRARIES})
+
+## Specify libraries to link a library or executable target against
+#target_link_libraries(contact ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
+
+## Declare a cpp executable
+#add_executable(hand_visualizer2 src/hand_visualizer.cpp)
+#add_executable(reflex imu.py)
+
+## Specify libraries to link a library or executable target against
+#target_link_libraries(hand_visualizer2 ${catkin_LIBRARIES})
+#add_dependencies(hand_visualizer2 reflex_msgs2_gencpp)

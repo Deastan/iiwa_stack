@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    <!-- The is gonna have its nodes/topics under a namespace with the same name. -->
+    <arg name="robot_name" default="iiwa"/>
+    <!-- Model of the iiwa to use : iiwa7, iiwa14 -->
+    <arg name="model" default="iiwa7"/>
+    <arg name="rviz" default="true" />
+    
+    <!-- Launches the controllers according to the hardware interface selected -->
+    <!-- Everythings is spawned under a namespace with the same name as the robot's. -->
+    
+    <group ns="$(arg robot_name)">
+        <node name="node_move_group_cpp" pkg="iiwa_control" type="move_cpp" respawn="false" output="screen"/>
+    </group>
+
+    <!-- <group ns="$(arg robot_name)">
+        <node name="node_move_group_python" pkg="iiwa_control" type="test_node_state.py" respawn="false" output="screen"/>
+    </group> -->
+    
+    
+</launch>
