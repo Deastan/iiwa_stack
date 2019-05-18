@@ -15,7 +15,10 @@
     <arg name="robot_name" default="iiwa" />
     <arg name="model" default="iiwa7"/>
     <arg name="namespace" default="iiwa"/>
-    <arg name="trajectory" default="false"/>
+    <arg name="trajectory" default="true"/>
+
+    <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/>
+    
 
     <!-- Loads the Gazebo world. -->
     <include file="$(find iiwa_gazebo)/launch/iiwa_world.launch">
@@ -28,37 +31,43 @@
     </include>
 
     <!-- Spawn controllers - it uses a JointTrajectoryController -->
-    <group  ns="$(arg namespace)" if="$(arg trajectory)">
+    <!-- ns="$(arg namespace)" -->
+    <group   if="$(arg trajectory)">
 
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value="joint_state_controller $(arg hardware_interface)_trajectory_controller" />
+            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
 
     </group>
+
 
     <!-- Spawn controllers - it uses an Effort Controller for each joint -->
-    <group ns="$(arg namespace)" unless="$(arg trajectory)">
+    <!-- ns="$(arg namespace)" -->
+    <group  unless="$(arg trajectory)">
 
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+        <!-- <include file="$(find reflex_control)/launch/reflex_control.launch"> -->
+        <!-- joint_state_controller -->
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value="joint_state_controller
-                 $(arg hardware_interface)_J1_controller
-                 $(arg hardware_interface)_J2_controller
-                 $(arg hardware_interface)_J3_controller
-                 $(arg hardware_interface)_J4_controller
-                 $(arg hardware_interface)_J5_controller
-                 $(arg hardware_interface)_J6_controller
-                 $(arg hardware_interface)_J7_controller"/>
+            <arg name="controllers" value="
+                
+                $(arg hardware_interface)_J1_controller
+                $(arg hardware_interface)_J2_controller
+                $(arg hardware_interface)_J3_controller
+                $(arg hardware_interface)_J4_controller
+                $(arg hardware_interface)_J5_controller
+                $(arg hardware_interface)_J6_controller
+                $(arg hardware_interface)_J7_controller"/>
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
 
     </group>
 
-    <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
+<include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
     </include>
 
 </launch>

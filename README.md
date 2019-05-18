@@ -10,8 +10,11 @@ $ roscore
 In terminal 2:
 $ roslaunch iiwa_gazebo iiwa_gazebo_tool.launch
 In terminal 3:
-$ roslaunch iiwa_test_moveit moveit_planning_execution.launch 
-
+$ roslaunch iiwa_test_3_moveit moveit_planning_execution.launch 
+And if you want to run a script which move the arm:
+$ roslaunch iiwa_control iiwa_script_test.launch 
+or
+$ roslaunch iiwa_control iiwa_cpp.launch
 
 ## From IFL
 ## IIWA STACK

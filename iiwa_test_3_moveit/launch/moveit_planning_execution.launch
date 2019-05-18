@@ -39,6 +39,8 @@
   <!-- Somthing really important is the namespace!!! Check that for robotics hand... -->
   <!-- Load move_group -->
     <group ns="$(arg robot_name)">
+    <!-- <group ns="reflex_takktile_2"> -->
+    
         <include file="$(find iiwa_test_3_moveit)/launch/move_group.launch">
             <arg name="publish_monitored_planning_scene" value="true" />
         </include>

@@ -151,7 +151,7 @@ int main(int argc, char **argv)
     // // and report success on execution of a trajectory.
 
     /* Uncomment below line when working with a real robot*/
-    // group.move();
+    group.move();
 
     // // Planning to a joint-space goal 
     // // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
