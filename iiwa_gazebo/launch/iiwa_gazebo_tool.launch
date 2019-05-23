@@ -32,11 +32,11 @@
 
     <!-- Spawn controllers - it uses a JointTrajectoryController -->
     <!-- ns="$(arg namespace)" -->
-    <group   if="$(arg trajectory)">
+    <group ns="$(arg namespace)" if="$(arg trajectory)">
 
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
+            <arg name="controllers" value="$(arg hardware_interface)_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
@@ -46,7 +46,7 @@
 
     <!-- Spawn controllers - it uses an Effort Controller for each joint -->
     <!-- ns="$(arg namespace)" -->
-    <group  unless="$(arg trajectory)">
+    <group ns="$(arg namespace)" unless="$(arg trajectory)">
 
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
         <!-- <include file="$(find reflex_control)/launch/reflex_control.launch"> -->
@@ -67,7 +67,18 @@
 
     </group>
 
-<include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
+    <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
     </include>
+
+    <!-- Run moveit planning execution -->
+    <!-- <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
+    </include> -->
+
+    <group ns="$(arg namespace)">
+
+        <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
+    </include>
+
+    </group>
 
 </launch>

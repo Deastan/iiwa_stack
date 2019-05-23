@@ -80,22 +80,22 @@ if __name__ == '__main__':
     # ============ Robot Groups: ['manipulator']
     # ============ Printing robot state
 
-    state_trajectory = 1
+    state_trajectory = 0
 
     if state_trajectory == 1:
         increment =  0.0
         pose_goal = geometry_msgs.msg.Pose()
         pose_goal.position.x = 0.5
         
-        state = robot.get_current_state()
-        print(state)
-        group.set_start_state(state)
+        # state = robot.get_current_state()
+        # print(state)
+        # group.set_start_state(state)
 
         # group.get_current_pose()
 
         while True:
-            state = robot.get_current_state()
-            print("Position: ( ", state.joint_state.position[0], ", ", state.joint_state.position[1], ", ", state.joint_state.position[2], " )")
+            # state = robot.get_current_state()
+            # print("Position: ( ", state.joint_state.position[0], ", ", state.joint_state.position[1], ", ", state.joint_state.position[2], " )")
             # state.joint_state.position[0] = 0.5
             # state.joint_state.position[1] = 0.5
             # state.joint_state.position[2] = 0.5
@@ -109,10 +109,11 @@ if __name__ == '__main__':
             # moveit_robot_state = RobotState()
             # moveit_robot_state.joint_state = joint_state
             # group.set_start_state(moveit_robot_state)
+            
+            # group.set_start_state(state)
 
-            group.set_start_state(state)
-
-            print(group.set_start_state_to_current_state())
+            # print(group.set_start_state_to_current_state())
+            # print(group.get_current_pose())
             pose_goal.orientation.w = 1.0
             pose_goal.position.x = 0.7*math.cos(increment)
             pose_goal.position.y = 0.7*math.sin(increment)
@@ -171,8 +172,9 @@ if __name__ == '__main__':
     else:   
         while True:
 
-            state = robot.get_current_state()
-            print(state)
+            # state = robot.get_current_state()
+            # print(state)
+            print(group.get_current_pose().pose)
         print("Noting to do!!!!")
 
 

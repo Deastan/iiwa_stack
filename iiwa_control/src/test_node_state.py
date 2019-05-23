@@ -48,7 +48,7 @@ def callback(data):
 
 
 def listener():
-        # rospy.init_node('test_node_state', anonymous=True)
+    # rospy.init_node('test_node_state', anonymous=True)
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('move_group_python_interface_tutorial', anonymous=True)
 

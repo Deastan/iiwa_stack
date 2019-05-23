@@ -15,25 +15,42 @@
     <arg name="model" default="iiwa7"/>
 
     <arg name="trajectory" default="false"/>
+    <arg name="namespace" default="/"/>
 
-   
-    <!-- Controller -->
-    <group ns="$(arg robot_name)" unless="$(arg trajectory)">
-
+      <!-- Spawn controllers - it uses a JointTrajectoryController -->
+    <!-- ns="$(arg namespace)" -->
+    <group if="$(arg trajectory)">
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value="joint_state_controller
-                 $(arg hardware_interface)_J1_controller
-                 $(arg hardware_interface)_J2_controller
-                 $(arg hardware_interface)_J3_controller
-                 $(arg hardware_interface)_J4_controller
-                 $(arg hardware_interface)_J5_controller
-                 $(arg hardware_interface)_J6_controller
-                 $(arg hardware_interface)_J7_controller"/>
+            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
 
     </group>
+    <!-- <arg name="robot_name" value="$(arg robot_name)" /> -->
+
+    <!-- Spawn controllers - it uses an Effort Controller for each joint -->
+    <!-- ns="$(arg namespace)" -->
+    <group unless="$(arg trajectory)">
+
+        <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+        <!-- <include file="$(find reflex_control)/launch/reflex_control.launch"> -->
+        <!-- joint_state_controller -->
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value="
+                $(arg hardware_interface)_J1_controller
+                $(arg hardware_interface)_J2_controller
+                $(arg hardware_interface)_J3_controller
+                $(arg hardware_interface)_J4_controller
+                $(arg hardware_interface)_J5_controller
+                $(arg hardware_interface)_J6_controller
+                $(arg hardware_interface)_J7_controller"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+        </include>
+
+    </group>
+    <!-- <arg name="robot_name" value="$(arg robot_name)" /> -->
     
 </launch>

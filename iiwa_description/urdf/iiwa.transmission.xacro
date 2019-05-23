@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="iiwa_transmission" params="hardware_interface">
     <transmission name="${robot_name}_tran_1">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_1">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>
@@ -14,7 +14,7 @@
     </transmission>
 
     <transmission name="${robot_name}_tran_2">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_2">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>
@@ -26,7 +26,7 @@
     </transmission>
 
     <transmission name="${robot_name}_tran_3">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_3">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>
@@ -38,7 +38,7 @@
     </transmission>
 
     <transmission name="${robot_name}_tran_4">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_4">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>
@@ -50,7 +50,7 @@
     </transmission>
 
     <transmission name="${robot_name}_tran_5">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_5">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>
@@ -62,7 +62,7 @@
     </transmission>
 
     <transmission name="${robot_name}_tran_6">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_6">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>
@@ -74,7 +74,7 @@
     </transmission>
 
     <transmission name="${robot_name}_tran_7">
-      <robotNamespace>/${robot_name}</robotNamespace>
+      <!-- <robotNamespace>/${robot_name}</robotNamespace> -->
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_7">
 	<hardwareInterface>${hardware_interface}</hardwareInterface>

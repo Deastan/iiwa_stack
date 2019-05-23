@@ -9,7 +9,8 @@
     <!-- Model of the iiwa to use : iiwa7, iiwa14 -->
     <!-- <arg name="model" default="iiwa7"/> -->
     <arg name="rviz" default="true" />
-    
+    <arg name="namespace" default="/"/>
+
     <!-- FOR ROS WITHOUT RL -->
     <remap from="/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" 
            to="/$(arg robot_name)/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" />
@@ -42,7 +43,9 @@
 
   <!-- Somthing really important is the namespace!!! Check that for robotics hand... -->
   <!-- Load move_group -->
-    <!-- <group ns="$(arg robot_name)"> -->
+
+  <!-- ns="$(arg namespace)" -->
+    <group >
     <!-- <group ns="reflex_takktile_2"> -->
     
       <include file="$(find iiwa_test_3_moveit)/launch/move_group.launch">
@@ -52,5 +55,5 @@
       <include if="$(arg rviz)" file="$(find iiwa_test_3_moveit)/launch/moveit_rviz.launch">
           <arg name="config" value="true"/>
       </include>
-    <!-- </group> -->
+    </group>
 </launch>

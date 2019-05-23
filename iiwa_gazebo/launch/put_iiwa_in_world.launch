@@ -16,48 +16,94 @@
     <arg name="robot_name" default="iiwa" />
     <arg name="model" default="iiwa7"/>
 
-    <arg name="trajectory" default="false"/>
+    <arg name="trajectory" default="true"/>
+    <arg name="namespace" default="/"/>
 
-    <!-- iiwa -->
-    <!-- Load the URDF with the given hardware interface into the ROS Parameter Server -->
-    <!-- <include file="$(find iiwa_description)/launch/$(arg model)_upload.launch">
-        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
-        <arg name="robot_name" value="$(arg robot_name)" />
-    </include> -->
-    
-    <!-- Robot iiwa description -->
+    <!-- <remap from="reflex_takktile_2/joint_states" to="joint_states"/> -->
+    <!-- <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/> -->
+     <group ns="/">
+        <remap from="/reflex_takktile_2/joint_states" to="/iiwa/joint_states"/>
+    </group>
 
-    <arg name="origin_xyz" default="'0 0 0'"/> <!-- Note the syntax to pass a vector -->
-    <arg name="origin_rpy" default="'0 0 0'"/>
-    <param name="robot_description" command="$(find xacro)/xacro '$(find iiwa_description)/urdf/iiwa7.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name) origin_xyz:=$(arg origin_xyz) origin_rpy:=$(arg origin_rpy)" />
+
+    <!-- Robot iiwa description --> <!-- Note the syntax to pass a vector -->
+    <!-- <arg name="origin_xyz" default="'0 0 0'"/> 
+    <arg name="origin_rpy" default="'0 0 0'"/> -->
+    <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find iiwa_description)/urdf/iiwa7.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name) origin_xyz:=$(arg origin_xyz) origin_rpy:=$(arg origin_rpy)" /> -->
     <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    <!-- <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model iiwa -param robot_description"/> -->
+
+    <group >
+        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
           args="-urdf -model iiwa -param robot_description"/>
+    </group>
+
 
     <!-- Controller -->
-
-    <include file="$(find iiwa_gazebo)/launch/controller_iiwa.launch">
+    <!-- ns="$(arg namespace)" -->
+    <!-- <group >
+        <include file="$(find iiwa_gazebo)/launch/controller_iiwa.launch">
+        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="trajectory" value="$(arg trajectory)" />
     </include>
-    <!-- <group ns="$(arg robot_name)" unless="$(arg trajectory)">
 
+    </group> -->
+   
+
+    <!-- <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+    </include> -->
+
+       <!-- Spawn controllers - it uses a JointTrajectoryController -->
+    <!-- ns="$(arg namespace)" -->
+    <group  if="$(arg trajectory)">
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value="joint_state_controller
-                 $(arg hardware_interface)_J1_controller
-                 $(arg hardware_interface)_J2_controller
-                 $(arg hardware_interface)_J3_controller
-                 $(arg hardware_interface)_J4_controller
-                 $(arg hardware_interface)_J5_controller
-                 $(arg hardware_interface)_J6_controller
-                 $(arg hardware_interface)_J7_controller"/>
+            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
 
-    </group> -->
+    </group>
+
+
+    <!-- Spawn controllers - it uses an Effort Controller for each joint -->
+    <!-- ns="$(arg namespace)" -->
+    <group  unless="$(arg trajectory)">
+
+        <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value="
+                $(arg hardware_interface)_J1_controller
+                $(arg hardware_interface)_J2_controller
+                $(arg hardware_interface)_J3_controller
+                $(arg hardware_interface)_J4_controller
+                $(arg hardware_interface)_J5_controller
+                $(arg hardware_interface)_J6_controller
+                $(arg hardware_interface)_J7_controller"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+        </include>
+
+    </group>
 
     <!-- Reflex -->
-    <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
-    </include>
+    <group >
+        <include file="$(find reflex_gazebo)/launch/reflex_tool_v2.launch">
+        </include>
+
+    </group>
     
+    <!-- Run moveit planning execution -->
+    <!-- <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
+    </include> -->
+    <!-- ns="$(arg robot_name)" -->
+    <group >
+        <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution_v2.launch">
+        </include>
+    </group>
 </launch>
