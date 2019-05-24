@@ -15,49 +15,11 @@
     <arg name="hardware_interface" default="PositionJointInterface"/>
     <arg name="robot_name" default="iiwa" />
     <arg name="model" default="iiwa7"/>
-
     <arg name="trajectory" default="true"/>
     <arg name="namespace" default="/"/>
+    <arg name="rviz" default="false"/>
 
-    <!-- <remap from="reflex_takktile_2/joint_states" to="joint_states"/> -->
-    <!-- <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/> -->
-     <group ns="/">
-        <remap from="/reflex_takktile_2/joint_states" to="/iiwa/joint_states"/>
-    </group>
-
-
-    <!-- Robot iiwa description --> <!-- Note the syntax to pass a vector -->
-    <!-- <arg name="origin_xyz" default="'0 0 0'"/> 
-    <arg name="origin_rpy" default="'0 0 0'"/> -->
-    <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find iiwa_description)/urdf/iiwa7.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name) origin_xyz:=$(arg origin_xyz) origin_rpy:=$(arg origin_rpy)" /> -->
-    <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
-    <!-- <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-          args="-urdf -model iiwa -param robot_description"/> -->
-
-    <group >
-        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-          args="-urdf -model iiwa -param robot_description"/>
-    </group>
-
-
-    <!-- Controller -->
-    <!-- ns="$(arg namespace)" -->
-    <!-- <group >
-        <include file="$(find iiwa_gazebo)/launch/controller_iiwa.launch">
-        <arg name="namespace" value="$(arg namespace)" />
-        <arg name="trajectory" value="$(arg trajectory)" />
-    </include>
-
-    </group> -->
-   
-
-    <!-- <include file="$(find iiwa_control)/launch/iiwa_control.launch">
-            <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
-            <arg name="robot_name" value="$(arg robot_name)" />
-            <arg name="model" value="$(arg model)" />
-    </include> -->
-
+    
        <!-- Spawn controllers - it uses a JointTrajectoryController -->
     <!-- ns="$(arg namespace)" -->
     <group  if="$(arg trajectory)">
@@ -67,14 +29,11 @@
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
-
     </group>
-
 
     <!-- Spawn controllers - it uses an Effort Controller for each joint -->
     <!-- ns="$(arg namespace)" -->
     <group  unless="$(arg trajectory)">
-
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
             <arg name="controllers" value="
@@ -88,8 +47,15 @@
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
-
     </group>
+
+    <!-- <group ns="/iiwa">
+       <node name="robot_state_publisher_reflex" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen"  >
+        </node>
+    </group> -->
+
+     
 
     <!-- Reflex -->
     <group >
@@ -99,11 +65,29 @@
     </group>
     
     <!-- Run moveit planning execution -->
-    <!-- <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
-    </include> -->
-    <!-- ns="$(arg robot_name)" -->
     <group >
         <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution_v2.launch">
+            <arg name="rviz" value="$(arg rviz)" />
         </include>
     </group>
+
+    <!-- <group >
+       <node name="robot_state_publisher_BIM" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen"  >
+        </node>
+    </group> -->
+    <!-- Publish the tf of the iiwa -->
+
+    <group >
+        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model iiwa -param robot_description"/>
+    </group>
+
+
+    <group >
+       <node name="robot_state_publisher_BIM" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen"  >
+        </node>
+    </group>
+
 </launch>

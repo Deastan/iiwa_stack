@@ -13,6 +13,9 @@
     <arg name="namespace" default="/"/>
     
     <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/>
+
+   
+
     <group ns="$(arg namespace)">
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -23,6 +26,8 @@
             <arg name="use_sim_time" value="$(arg use_sim_time)"/>
             <arg name="headless" value="$(arg headless)"/>
         </include>
+
+
     </group>
 
 </launch>

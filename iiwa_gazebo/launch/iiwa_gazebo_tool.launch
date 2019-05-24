@@ -26,8 +26,6 @@
         <arg name="robot_name" value="$(arg robot_name)" />
         <arg name="model" value="$(arg model)" />
         <!-- <arg name="namespace" default="iiwa"/> -->
-        
-        
     </include>
 
     <!-- Spawn controllers - it uses a JointTrajectoryController -->
@@ -75,7 +73,6 @@
     </include> -->
 
     <group ns="$(arg namespace)">
-
         <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
     </include>
 
