@@ -4,7 +4,16 @@
   <!-- One can change this world to his needs or use another one. -->
   
   <world name="default">
-    
+
+    <!-- <gravity>0 0 -9.81</gravity> -->
+
+    <!-- <physics name="default_physics" default="0" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics> -->
+
+
     <include>
       <uri>model://ground_plane</uri>
     </include>
@@ -17,10 +26,68 @@
     <!-- Focus camera -->
     <gui fullscreen='0'>
       <camera name='user_camera'>
-	<pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
-	<view_controller>orbit</view_controller>
+        <pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
+        <view_controller>orbit</view_controller>
       </camera>
     </gui>
+
+     <!-- Cubes -->
+    <!-- <model name="cube1">
+      <pose>0.4 -0.2 0.775 0 0 0</pose>
+      <link name="link">
+        <pose>0 0 0.025 0 0 0</pose>
+        <inertial>
+          <mass>0.0565</mass>
+          <inertia>
+            <ixx>2.3541666666666672e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.3541666666666672e-05</iyy>
+            <iyz>0</iyz>
+            <izz>2.3541666666666672e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <poissons_ratio>0.347</poissons_ratio>
+              <elastic_modulus>8.8e+09</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>1</kd>
+                <max_vel>1.0</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1.0</coefficient>
+                <use_patch_radius>0</use_patch_radius>
+                <surface_radius>0.05</surface_radius>
+              </torsional>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Wood</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+  </model> -->
     
   </world>
   
