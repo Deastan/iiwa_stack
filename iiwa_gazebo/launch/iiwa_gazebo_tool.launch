@@ -23,7 +23,7 @@
     
 
     <!-- Loads the Gazebo world. -->
-    <include file="$(find iiwa_gazebo)/launch/iiwa_world.launch">
+    <include file="$(find iiwa_gazebo)/launch/iiwa_world_debug.launch">
         <arg name="hardware_interface" value="$(arg hardware_interface)" />
         <arg name="robot_name" value="$(arg robot_name)" />
         <arg name="model" value="$(arg model)" />
