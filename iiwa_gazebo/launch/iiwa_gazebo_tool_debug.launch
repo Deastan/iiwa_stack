@@ -16,10 +16,10 @@
     <arg name="model" default="iiwa7"/>
     <arg name="namespace" default="iiwa"/>
     <arg name="trajectory" default="true"/>
-    <arg name="bool_object" default="true"/>
+    <arg name="bool_object" default="false"/>
     
 
-    <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/>
+    <!-- <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/> -->
     
 
     <!-- Loads the Gazebo world. -->
@@ -33,12 +33,13 @@
     <!-- Spawn controllers - it uses a JointTrajectoryController -->
     <!-- ns="$(arg namespace)" -->
     <group ns="$(arg namespace)" if="$(arg trajectory)">
-        <rosparam file="$(find iiwa_gazebo)/config/iiwa_control.yaml" command="load" />
+        <!-- <rosparam file="$(find iiwa_gazebo)/config/iiwa_control.yaml" command="load" /> -->
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value="$(arg hardware_interface)_trajectory_controller" />
+            <arg name="controllers" value="joint_state_controller $(arg hardware_interface)_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
+
         </include>
 
     </group>
@@ -67,48 +68,19 @@
 
     </group>
 
-    <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
-    </include>
+    <!-- <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
+    </include> -->
 
     <!-- Run moveit planning execution -->
     <!-- <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
     </include> -->
 
     <group ns="$(arg namespace)">
-        <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
-    </include>
+        <include file="$(find iiwa_debug_moveit)/launch/moveit_planning_execution_debug.launch">
+        </include>
 
     </group>
 
-    <!-- Add the object ns="$(arg namespace)"-->
-    <group if="$(arg bool_object)">
-        <arg name="object_name" default="object_to_catch"/>
-        <arg name="model_path" default="$(find reflex_description)/urdf/$(arg object_name).xacro"/>
-        <arg name="object_x" default="0.5"/>
-        <arg name="object_y" default="0.0"/>
-        <arg name="object_z" default="0.025"/>
-        <arg name="object_roll" default="0.00"/>
-        <arg name="object_pitch" default="0.00"/>
-        <arg name="object_yaw" default="0"/>
-        <!-- <group ns="$(arg namespace)"> -->
-        <param name="object_description" command="$(find xacro)/xacro.py '$(arg model_path)' robot_name:=$(arg object_name)" />
-        
-        <node name="spawn_object" pkg="gazebo_ros" type="spawn_model" 
-            args="
-                -param object_description 
-                -urdf 
-                -model $(arg object_name)
-                -x $(arg object_x) 
-                -y $(arg object_y) 
-                -z $(arg object_z)
-                -R $(arg object_roll)
-                -P $(arg object_pitch)
-                -Y $(arg object_yaw)"             
-                respawn="false" output="screen">
-        </node>
-    </group>
-    <!-- </group> -->
-    <!-- Object localization: -->
-    <node name="object_pose_publisher" pkg="reflex_description" type:"gazebo_object_publisher.py">
-    </node>
+
+
 </launch>

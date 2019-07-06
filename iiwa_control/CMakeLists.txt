@@ -79,6 +79,9 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 add_executable(move_cpp src/move.cpp)
 target_link_libraries(move_cpp ${catkin_LIBRARIES})
 
+add_executable(move_node src/move_node.cpp)
+target_link_libraries(move_node ${catkin_LIBRARIES})
+
 ## Specify libraries to link a library or executable target against
 #target_link_libraries(contact ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 

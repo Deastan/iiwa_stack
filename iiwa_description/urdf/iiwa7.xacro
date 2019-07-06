@@ -328,6 +328,27 @@
     </joint>
     
     <link name="${robot_name}_link_ee">
+      <inertial>
+        <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="0.01464"  ixy="0.0005912"  ixz="0" iyy="0.01465" iyz="0" izz="0.002872" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 -0.0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+        <material name="Grey"/>
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 -0.0005" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+        <material name="Grey"/>
+      </collision>
     </link>
     
     <!--Extensions -->

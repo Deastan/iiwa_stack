@@ -56,6 +56,8 @@ if __name__ == '__main__':
                                                moveit_msgs.msg.DisplayTrajectory,
                                                queue_size=20)
 
+    group.set_planner_id("RRTkConfigDefault")
+
     #********************CODE****************
     # # We can get the name of the reference frame for this robot:
     # planning_frame = group.get_planning_frame()
@@ -80,7 +82,7 @@ if __name__ == '__main__':
     # ============ Robot Groups: ['manipulator']
     # ============ Printing robot state
 
-    state_trajectory = 0
+    state_trajectory = 1
 
     if state_trajectory == 1:
         increment =  0.0
@@ -92,8 +94,8 @@ if __name__ == '__main__':
         # group.set_start_state(state)
 
         # group.get_current_pose()
-
-        while True:
+        t = 0
+        while t<15:
             # state = robot.get_current_state()
             # print("Position: ( ", state.joint_state.position[0], ", ", state.joint_state.position[1], ", ", state.joint_state.position[2], " )")
             # state.joint_state.position[0] = 0.5
@@ -120,7 +122,14 @@ if __name__ == '__main__':
             pose_goal.position.z = 0.7#+0.2*math.sin(increment)
             group.set_pose_target(pose_goal)
 
+
+            # self.plan = self.group.plan()
+            # result = self.group.go(wait=True)
+
             plan = group.go(wait=True)
+            # print(plan)
+            # rospy.sleep(0.0001)
+            # print(plan)
             # Calling `stop()` ensures that there is no residual movement
             group.stop()
             # It is always good to clear your targets after planning with poses.
@@ -132,7 +141,8 @@ if __name__ == '__main__':
             # group.set_start_state(state)
             # rospy.sleep(3.)
             # group.set_start_state_to_current_state()
-            increment += 0.78539816339
+            increment += 0.078539816339
+            t+=1
 
             # rospy.spin()
 

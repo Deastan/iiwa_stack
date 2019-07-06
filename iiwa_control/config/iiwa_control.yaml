@@ -147,30 +147,68 @@
       - iiwa_joint_7
 
     constraints:
-      goal_time: 15.0                   # Override default
-      stopped_velocity_tolerance: 0.5
-      # iiwa_joint_1: {p: 8.0, i: 0.8, d: 0.8, trajectory: 0.1, goal: 0.5}
-      # {p: 0.05, i: 0.05, d: 0.05, trajectory: 0.5, goal: 0.5}
-      iiwa_joint_1: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
-      iiwa_joint_2: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
-      iiwa_joint_3: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
-      iiwa_joint_4: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
-      iiwa_joint_5: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
-      iiwa_joint_6: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
-      iiwa_joint_7: {p: 1.0, i: 0.8, d: 0.5, trajectory: 0.05, goal: 0.05}
-        # trajectory: 0.1
+      goal_time: 0.5                  # Override default #15.0
+      # stopped_velocity_tolerance: 0.5
+      # iiwa_joint_1: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+      # iiwa_joint_2: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+      # iiwa_joint_3: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+      # iiwa_joint_4: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+      # iiwa_joint_5: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+      # iiwa_joint_6: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+      # iiwa_joint_7: 
+      #   goal: 0.01
+      #   trajectory: 0.1
+
+    
+      # gains:
+      # iiwa_joint_1: {p: 80.0, i: 0.8, d: 0.8, trajectory: 0.05, goal: 0.5}
+      # # {p: 0.05, i: 0.05, d: 0.05, trajectory: 0.5, goal: 0.5}
+      # # iiwa_joint_1: {p: 1.0, i: 0.8, d: 0.8, trajectory: 0.005, goal: 0.05}
+      #   # trajectory: 0.1
+      # iiwa_joint_2: {p: 80.0, i: 0.8, d: 5.0, trajectory: 0.05, goal: 0.005}
+      #   # trajectory: 0.1
+      # iiwa_joint_3: {p: 80.0, i: 0.8, d: 0.8, trajectory: 0.005, goal: 0.005}
+      #   # trajectory: 0.10
+      # iiwa_joint_4: {p: 80.0, i: 0.8, d: 0.8, trajectory: 0.005, goal: 0.005}
+      #   # trajectory: 0.1
+      # iiwa_joint_5: {p: 80.0, i: 0.8, d: 0.8, trajectory: 0.005, goal: 0.005}
+      #   # trajectory: 0.1
+      # iiwa_joint_6: {p: 80.0, i: 0.8, d: 0.8, trajectory: 0.005, goal: 0.005}
+      #   # trajectory: 0.1
+      # iiwa_joint_7: {p: 80.0, i: 0.8, d: 0.5, trajectory: 0.005, goal: 0.005}
+      #     # trajectory: 0.1
+    # gains: 
+    # iiwa_joint_1:  {p: 7,  i: 0.01, d: 1}
+
+    # iiwa_joint_2:  {p: 1.0,  i: 100, d: 1}
+
+    # iiwa_joint_3: {p: 1.0,  i: 3.5, d: 1}
+
+    # iiwa_joint_4:  {p: 1.0,  i: 6.0, d: 2}
+
+    # iiwa_joint_5: {p: 1.0,  i: 3.0, d: 1}
+
+    # iiwa_joint_6:  {p: 1.0,  i: 0.1, d: 1}
+
+    # iiwa_joint_7: {p: 1.0,  i: 0.1, d: 1}
 
         # , i_clamp_min: -10000, i_clamp_max: 10000
 
-    state_publish_rate:  100            # Override default # before 25
+    state_publish_rate:  25            # Override default # before 25
     action_monitor_rate: 30            # Override default
-    stop_trajectory_duration: 0.5        # Override default
+    stop_trajectory_duration: 0.0        # Override default
     
   # Forward Velocity Controllers ---------------------------------------
   VelocityJointInterface_trajectory_controller:

@@ -8,7 +8,7 @@
     <!-- Params -->
     <!-- These are the arguments you can pass this launch file, for example paused:=true -->
     <arg name="paused" default="false"/>
-    <arg name="use_sim_time" default="true"/>
+    <arg name="use_sim_time" default="false"/>
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
@@ -17,6 +17,7 @@
     <arg name="model" default="iiwa7"/>
     <arg name="trajectory" default="true"/>
     <arg name="namespace" default="/"/>
+    <arg name="namespace_iiwa" default="/iiwa"/>
     <arg name="rviz" default="false"/>
 
     <arg name="bool_object" default="true"/>
@@ -28,7 +29,7 @@
         <!-- <rosparam file="$(find iiwa_gazebo)/config/iiwa_control.yaml" command="load" /> -->
         <include file="$(find iiwa_control)/launch/iiwa_control.launch">
             <arg name="hardware_interface" value="$(arg hardware_interface)" />
-            <arg name="controllers" value=" $(arg hardware_interface)_trajectory_controller" />
+            <arg name="controllers" value="joint_state_controller $(arg hardware_interface)_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="model" value="$(arg model)" />
         </include>
@@ -58,21 +59,36 @@
         </node>
     </group> -->
 
-     
+    <!-- Load the URDF with the given hardware interface into the ROS Parameter Server -->
+    <include file="$(find iiwa_description)/launch/$(arg model)_upload.launch">
+        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
 
-    <!-- Reflex -->
-    <group >
-        <include file="$(find reflex_gazebo)/launch/reflex_tool_v2.launch">
-        </include>
+    <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model iiwa -param robot_description"/>
+    
 
-    </group>
     
     <!-- Run moveit planning execution -->
-    <group >
+    <!-- <group >
         <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution_v2.launch">
             <arg name="rviz" value="$(arg rviz)" />
         </include>
+    </group> -->
+
+    <group ns="$(arg namespace_iiwa)">
+        <include file="$(find iiwa_debug_moveit)/launch/moveit_planning_execution_debug.launch">
+        <arg name="rviz" value="$(arg rviz)" />
+        </include>
+        
     </group>
+    <!-- <group >
+        <include file="$(find iiwa_debug_moveit)/launch/moveit_planning_execution_debug.launch">
+            <arg name="rviz" value="$(arg rviz)" />
+        </include>
+    </group> -->
     <!-- <group >
        <node name="robot_state_publisher_BIM" pkg="robot_state_publisher" type="robot_state_publisher"
         respawn="false" output="screen"  >
@@ -80,53 +96,16 @@
     </group> -->
     <!-- Publish the tf of the iiwa -->
 
-    <group >
+    <!-- <group >
         <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
           args="-urdf -model iiwa -param robot_description"/>
-    </group>
+    </group> -->
 
 
-    <group >
+    <!-- <group >
        <node name="robot_state_publisher_BIM" pkg="robot_state_publisher" type="robot_state_publisher"
         respawn="false" output="screen"  >
         </node>
-    </group>
-
-
-    <!-- Add the object -->
-    <!-- Add the object ns="$(arg namespace)"-->
-    <group if="$(arg bool_object)">
-        <arg name="object_name" default="cube1"/>
-        <!-- <arg name="model_path" default="$(find reflex_description)/urdf/$(arg object_name).xacro"/> -->
-        <arg name="model_path" default="$(find reflex_description)/urdf/object_to_catch.xacro"/>
-        <arg name="object_x" default="0.5"/>
-        <arg name="object_y" default="0.0"/>
-        <arg name="object_z" default="0.025"/>
-        <arg name="object_roll" default="0.00"/>
-        <arg name="object_pitch" default="0.00"/>
-        <arg name="object_yaw" default="0"/>
-        <!-- <group ns="$(arg namespace)"> -->
-        <param name="object_description" command="$(find xacro)/xacro.py '$(arg model_path)' robot_name:=$(arg object_name)" />
-        
-        <node name="spawn_object" pkg="gazebo_ros" type="spawn_model" 
-            args="
-                -param object_description 
-                -urdf 
-                -model $(arg object_name)
-                -x $(arg object_x) 
-                -y $(arg object_y) 
-                -z $(arg object_z)
-                -R $(arg object_roll)
-                -P $(arg object_pitch)
-                -Y $(arg object_yaw)"             
-                respawn="false" output="screen">
-        </node>
-    </group>
-    <!-- <node name="object_pose_publisher" pkg="reflex_description" type:"gazebo_object_publisher">
-    </node> -->
-    <group if="true" ns="/gazebo">
-        <node name="gazebo_object_publisher" pkg="reflex_description" type="gazebo_object_publisher.py" output="screen">
-        </node>
-    </group>
+    </group> -->
 
 </launch>
