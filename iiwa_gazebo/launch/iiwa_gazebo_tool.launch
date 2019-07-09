@@ -81,7 +81,7 @@
     </group>
 
     <!-- Add the object ns="$(arg namespace)"-->
-    <group if="$(arg bool_object)">
+    <!-- <group if="$(arg bool_object)">
         <arg name="object_name" default="object_to_catch"/>
         <arg name="model_path" default="$(find reflex_description)/urdf/$(arg object_name).xacro"/>
         <arg name="object_x" default="0.5"/>
@@ -90,7 +90,8 @@
         <arg name="object_roll" default="0.00"/>
         <arg name="object_pitch" default="0.00"/>
         <arg name="object_yaw" default="0"/>
-        <!-- <group ns="$(arg namespace)"> -->
+        
+        
         <param name="object_description" command="$(find xacro)/xacro.py '$(arg model_path)' robot_name:=$(arg object_name)" />
         
         <node name="spawn_object" pkg="gazebo_ros" type="spawn_model" 
@@ -107,8 +108,9 @@
                 respawn="false" output="screen">
         </node>
     </group>
-    <!-- </group> -->
-    <!-- Object localization: -->
+    
+    
+    
     <node name="object_pose_publisher" pkg="reflex_description" type:"gazebo_object_publisher.py">
-    </node>
+    </node> -->
 </launch>
