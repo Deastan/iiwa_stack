@@ -17,18 +17,19 @@
     <arg name="namespace" default="iiwa"/>
     <arg name="trajectory" default="true"/>
     <arg name="gui" default="true"/>
-    <arg name="bool_object" default="false"/>
+    <arg name="paused" default="false"/>
     
 
     <!-- <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/> -->
     <remap from="reflex_takktile_2/joint_states" to="iiwa/joint_states"/>
 
     <!-- Loads the Gazebo world. -->
-    <include file="$(find iiwa_gazebo)/launch/iiwa_world.launch">
+    <include file="$(find iiwa_gazebo)/launch/iiwa_world_debug.launch">
         <arg name="hardware_interface" value="$(arg hardware_interface)" />
         <arg name="robot_name" value="$(arg robot_name)" />
         <arg name="model" value="$(arg model)" />
-        <arg name="gui" default="$(arg gui)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="paused" value="$(arg paused)"/>
         <!-- <arg name="namespace" default="iiwa"/> -->
     </include>
 
@@ -79,12 +80,12 @@
     <!-- <group ns="$(arg namespace)">
         <include file="$(find iiwa_debug_moveit)/launch/moveit_planning_execution_debug.launch">
         </include>
-
     </group> -->
+
     <group ns="$(arg namespace)">
         <include file="$(find iiwa_reflex_debug_moveit)/launch/moveit_planning_execution_debug.launch">
+        <arg name="rviz" value="false" />
         </include>
-
     </group>
 
     <!-- Robotic hand: -->
