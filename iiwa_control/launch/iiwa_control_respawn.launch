@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!-- Launches the controllers according to the hardware interface selected -->
+    <!-- Everythings is spawned under a namespace with the same name as the robot's. -->
+    
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    <arg name="controllers" default="joint_state_controller pos_joint_trajectory_controller"/>
+    <arg name="robot_name" default="iiwa" />
+    <arg name="model" default="iiwa7" />
+    <arg name="namespace" default="iiwa"/>
+    
+    <!-- Loads joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find iiwa_control)/config/$(arg robot_name)_control.yaml" command="load" ns="/iiwa"/>
+    
+    <!-- Loads the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="$(arg controllers) --shutdown-timeout 2" />
+      <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="$(arg controllers)" /> -->
+    <!-- $(arg namespace) -->
+    
+    <!-- CREATE SOME ISSUE WHEN PUBLISHING THE JOINT ANGLE -->
+    <!-- Converts joint states to TF transforms for rviz, etc -->
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+          respawn="false" output="screen" ns="$(arg namespace)">
+        
+    </node> -->
+
+    
+    
+</launch>
