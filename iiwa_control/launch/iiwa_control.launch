@@ -14,7 +14,7 @@
     <rosparam file="$(find iiwa_control)/config/$(arg robot_name)_control.yaml" command="load" />
     
     <!-- Loads the controllers -->
-    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="true"
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
           output="screen" args="$(arg controllers) --shutdown-timeout 2" />
       <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
           output="screen" args="$(arg controllers)" /> -->
