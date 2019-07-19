@@ -35,6 +35,14 @@
       <!-- <real_time_factor>10</real_time_factor> -->
       <real_time_update_rate>0</real_time_update_rate>
       <!-- <gravity>0 0 -9.8</gravity> -->
+      <!-- <real_time_update_rate>1500</real_time_update_rate> -->
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>50</iters> 
+          <!-- 50 iters is the default one... using quick. -->
+        </solver>
+      </ode>
     </physics>
 
      <!-- Cubes -->

@@ -91,6 +91,9 @@
     <!-- Robotic hand: -->
     <include file="$(find reflex_gazebo)/launch/reflex_tool_debug.launch">
     </include>
+    <!-- object -->
+    <include file="$(find reflex_description)/launch/object_publisher.launch">
+    </include>
 
 
 
