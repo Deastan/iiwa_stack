@@ -8,12 +8,12 @@ from iiwa_msgs.msg import CartesianPose
 from geometry_msgs.msg import PoseStamped
 # from iiwa_msgs.msg import CartesianPoseLin
 import tf
-
+import math
 
 def talker():
     CartesianPose_bool = False
     if CartesianPose_bool:
-        pub = rospy.Publisher('/iiwa/command/CartesianPose', CartesianPose, queue_size=10)
+        pub = rospy.Publisher('/iiwa/command/CartesianPose', CartesianPose, queue_size=1)
     else:
         # pub = rospy.Publisher('/iiwa/command/CartesianPose', PoseStamped, queue_size=1)
         pub = rospy.Publisher('/iiwa/command/CartesianPose', PoseStamped, queue_size=1)
@@ -56,9 +56,10 @@ def talker():
             goal.header.stamp = rospy.Time.now()
             goal.header.frame_id = "world"
 
-            goal.pose.position.x = 0.4
+            goal.pose.position.x = 0.5
             goal.pose.position.y = -0.4
-            goal.pose.position.z = 0.3
+
+            goal.pose.position.z = 0.4
 
             quaternion = tf.transformations.quaternion_from_euler(3.14, 0.0, -3.14)#1.5707963
 
@@ -67,9 +68,16 @@ def talker():
             goal.pose.orientation.z = quaternion[2]
             goal.pose.orientation.w = quaternion[3]
 
-            rospy.loginfo(goal)
-            pub.publish(goal)
-            rate.sleep()
+            for i in range(50):
+                goal.pose.position.y += 0.01
+                rospy.loginfo(goal)
+                pub.publish(goal)
+                rate.sleep()
+            for i in range(50):
+                goal.pose.position.y -= 0.01
+                rospy.loginfo(goal)
+                pub.publish(goal)
+                rate.sleep()
 
 if __name__ == '__main__':
     try:
