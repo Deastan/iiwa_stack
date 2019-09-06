@@ -70,18 +70,6 @@
 
     </group>
 
-    <!-- <include file="$(find reflex_gazebo)/launch/reflex_tool.launch">
-    </include> -->
-
-    <!-- Run moveit planning execution -->
-    <!-- <include file="$(find iiwa_test_3_moveit)/launch/moveit_planning_execution.launch">
-    </include> -->
-
-    <!-- <group ns="$(arg namespace)">
-        <include file="$(find iiwa_debug_moveit)/launch/moveit_planning_execution_debug.launch">
-        </include>
-    </group> -->
-
     <group ns="$(arg namespace)">
         <include file="$(find iiwa_reflex_debug_moveit)/launch/moveit_planning_execution_debug.launch">
         <arg name="rviz" value="false" />

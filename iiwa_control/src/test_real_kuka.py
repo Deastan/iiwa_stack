@@ -56,10 +56,10 @@ def talker():
             goal.header.stamp = rospy.Time.now()
             goal.header.frame_id = "world"
 
-            goal.pose.position.x = 0.5
-            goal.pose.position.y = -0.4
+            goal.pose.position.x = 0.408
+            goal.pose.position.y = 0.126
 
-            goal.pose.position.z = 0.4
+            goal.pose.position.z = 0.5#0.21
 
             quaternion = tf.transformations.quaternion_from_euler(3.14, 0.0, -3.14)#1.5707963
 
@@ -68,16 +68,18 @@ def talker():
             goal.pose.orientation.z = quaternion[2]
             goal.pose.orientation.w = quaternion[3]
 
-            for i in range(50):
-                goal.pose.position.y += 0.01
-                rospy.loginfo(goal)
-                pub.publish(goal)
-                rate.sleep()
-            for i in range(50):
-                goal.pose.position.y -= 0.01
-                rospy.loginfo(goal)
-                pub.publish(goal)
-                rate.sleep()
+            pub.publish(goal)
+            rate.sleep()
+            # for i in range(50):
+            #     goal.pose.position.y += 0.01
+            #     rospy.loginfo(goal)
+            #     pub.publish(goal)
+            #     rate.sleep()
+            # for i in range(50):
+            #     goal.pose.position.y -= 0.01
+            #     rospy.loginfo(goal)
+            #     pub.publish(goal)
+            #     rate.sleep()
 
 if __name__ == '__main__':
     try:
